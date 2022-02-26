@@ -1,0 +1,25 @@
+
+This macro will create a new spreadsheet for every different name on a list of names. Each 
+spreadsheet will have a copy of a Template spreadsheet with several formulas and the overall grade of
+the students will be displayed in an orderly manner in a simple table in the "Resumo" spreadsheet. 
+
+function Tabelas() {
+  var spreadsheet = SpreadsheetApp.getActive();
+  
+  for(var i=0; i<spreadsheet.getSheetByName("Resumo").getLastRow()-2; i++){
+    var nome = spreadsheet.getSheetByName("Resumo").getRange(i+3, 3).getValue();
+    spreadsheet.insertSheet().setName(nome);
+    
+    var novaplanilha = spreadsheet.getSheetByName(nome);
+    var tabela = spreadsheet.getSheetByName("Template").getRange("B3:O30");
+
+    tabela.copyTo(novaplanilha.getRange("B3"));
+    var nota = spreadsheet.getSheetByName(nome).getRange("C30");
+    nota.copyTo(spreadsheet.getSheetByName("Resumo").getRange(i+3,4))
+
+    spreadsheet.getSheetByName("Resumo").getRange(i+3, 4).setValue("='"+nome+"'!C30")
+    spreadsheet.getSheetByName("Resumo").getRange(i+3, 4).setBackground(null)
+    spreadsheet.getSheetByName("Resumo").getRange(i+3, 4).setBorder(false, false,false,false,false,false)
+  };
+  
+};
