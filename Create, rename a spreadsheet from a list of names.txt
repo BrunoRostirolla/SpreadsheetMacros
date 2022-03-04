@@ -1,25 +1,30 @@
+List of Spreadsheets Macros
 
-This macro will create a new spreadsheet for every different name on a list of names. Each 
-spreadsheet will have a copy of a Template spreadsheet with several formulas and the overall grade of
-the students will be displayed in an orderly manner in a simple table in the "Resumo" spreadsheet. 
+For each item, there is a link to a Google Sheet file where you can try the macro and the description of what it does.
 
-function Tabelas() {
-  var spreadsheet = SpreadsheetApp.getActive();
-  
-  for(var i=0; i<spreadsheet.getSheetByName("Resumo").getLastRow()-2; i++){
-    var nome = spreadsheet.getSheetByName("Resumo").getRange(i+3, 3).getValue();
-    spreadsheet.insertSheet().setName(nome);
-    
-    var novaplanilha = spreadsheet.getSheetByName(nome);
-    var tabela = spreadsheet.getSheetByName("Template").getRange("B3:O30");
+**1. Create, rename a spreadsheet and paste a sample template.**
+        Link - https://docs.google.com/spreadsheets/d/1hSOBjIdjgFArHcjprNLlKsPjd0lSh0CY2euOCVmazIg/edit?usp=sharing
+        Description - This macro will create a new spreadsheet for every different name on a list of names. Each 
+                      spreadsheet will have a copy of a Template spreadsheet with several formulas and the overall grade of
+                      the students will be displayed in an orderly manner in a simple table in the "Resumo" spreadsheet. 
 
-    tabela.copyTo(novaplanilha.getRange("B3"));
-    var nota = spreadsheet.getSheetByName(nome).getRange("C30");
-    nota.copyTo(spreadsheet.getSheetByName("Resumo").getRange(i+3,4))
+                      function Tabelas() {
+                        var spreadsheet = SpreadsheetApp.getActive();
 
-    spreadsheet.getSheetByName("Resumo").getRange(i+3, 4).setValue("='"+nome+"'!C30")
-    spreadsheet.getSheetByName("Resumo").getRange(i+3, 4).setBackground(null)
-    spreadsheet.getSheetByName("Resumo").getRange(i+3, 4).setBorder(false, false,false,false,false,false)
-  };
-  
-};
+                        for(var i=0; i<spreadsheet.getSheetByName("Resumo").getLastRow()-2; i++){
+                          var nome = spreadsheet.getSheetByName("Resumo").getRange(i+3, 3).getValue();
+                          spreadsheet.insertSheet().setName(nome);
+
+                          var novaplanilha = spreadsheet.getSheetByName(nome);
+                          var tabela = spreadsheet.getSheetByName("Template").getRange("B3:O30");
+
+                          tabela.copyTo(novaplanilha.getRange("B3"));
+                          var nota = spreadsheet.getSheetByName(nome).getRange("C30");
+                          nota.copyTo(spreadsheet.getSheetByName("Resumo").getRange(i+3,4))
+
+                          spreadsheet.getSheetByName("Resumo").getRange(i+3, 4).setValue("='"+nome+"'!C30")
+                          spreadsheet.getSheetByName("Resumo").getRange(i+3, 4).setBackground(null)
+                          spreadsheet.getSheetByName("Resumo").getRange(i+3, 4).setBorder(false, false,false,false,false,false)
+                        };
+
+                      };
